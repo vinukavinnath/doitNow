@@ -14,14 +14,15 @@ class DoItNow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'DoitNow',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.dark,
+        // brightness: Brightness.dark,
         fontFamily: 'Sequel Sans',
         scaffoldBackgroundColor: kScaffoldColor,
       ),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
