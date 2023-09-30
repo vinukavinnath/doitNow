@@ -18,6 +18,7 @@ class DoItNow extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
+        fontFamily: 'Sequel Sans',
         scaffoldBackgroundColor: kScaffoldColor,
       ),
       home: HomePage(),

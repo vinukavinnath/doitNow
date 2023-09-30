@@ -1,4 +1,6 @@
+import 'package:doitnow/core/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,6 +11,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String compliment = '';
+  String dayOfWeek = '';
+  String currentMonth = '';
+  String currentDate = '';
 
   @override
   void initState() {
@@ -19,8 +24,12 @@ class _HomePageState extends State<HomePage> {
   void updateCompliment() {
     final currentTime = DateTime.now();
     final hour = currentTime.hour;
+    final dayFormat = DateFormat('EEEE');
+    final dateFormat = DateFormat('MMM dd, yyyy');
     setState(() {
       compliment = getCompliment(hour);
+      dayOfWeek = dayFormat.format(currentTime);
+      currentDate = dateFormat.format(currentTime);
     });
   }
 
@@ -39,10 +48,32 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+          ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('$compliment!'),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 24.0,
+                ),
+                child: Text(
+                  '$compliment!',
+                  style: kComplimentTextStyle,
+                ),
+              ),
+              Text(
+                'Today\'s $dayOfWeek',
+                style: kSubtitleTextStyle,
+              ),
+              Text(
+                currentDate,
+                style: kSubtitleTextStyle.copyWith(
+                  color: kDarkGreyColor,
+                  fontSize: 16,
+                ),
+              ),
             ],
           ),
         ),
