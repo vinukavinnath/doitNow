@@ -12,10 +12,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   List<List> tasks = [
     ['Myself', 'Walk my Dog', false],
     ['Home', 'Grocery Shopping', false],
     ['Work', 'Business Meeting', false],
+    ['Myself', 'Meet Doctor', false],
   ];
 
   String compliment = '';
@@ -25,7 +27,7 @@ class _HomePageState extends State<HomePage> {
 
   bool isCompleted = false;
 
-  void deleteTask(BuildContext context) {}
+
 
   void updateCompliment() {
     final currentTime = DateTime.now();
@@ -49,6 +51,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void deleteTask(int index) {
+    setState(() {
+      tasks.removeAt(index);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -57,7 +65,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    // double screenWidth = MediaQuery.of(context).size.width;
 
     return SafeArea(
       child: Scaffold(
@@ -79,15 +87,62 @@ class _HomePageState extends State<HomePage> {
                       style: kComplimentTextStyle,
                     ),
                   ),
-                  Text(
-                    'Today\'s $dayOfWeek',
-                    style: kSubtitleTextStyle,
-                  ),
-                  Text(
-                    currentDate,
-                    style: kSubtitleTextStyle.copyWith(
-                      color: kDarkGreyColor,
-                      fontSize: 16,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Today\'s $dayOfWeek',
+                              style: kSubtitleTextStyle,
+                            ),
+                            Text(
+                              currentDate,
+                              style: kSubtitleTextStyle.copyWith(
+                                color: kDarkGreyColor,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 24.0,
+                                vertical: 4.0,
+                              ),
+                              decoration: BoxDecoration(
+                                color: kCard2Color,
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              child: Text(
+                                tasks.length.toString(),
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: Text(
+                                tasks.length == 1 ? 'Task' : 'Tasks',
+                                style: kComplimentTextStyle.copyWith(
+                                  fontSize: 25.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -101,7 +156,9 @@ class _HomePageState extends State<HomePage> {
                         motion: const StretchMotion(),
                         children: [
                           SlidableAction(
-                            onPressed: deleteTask,
+                            onPressed: (context){
+                              deleteTask(index);
+                            },
                             icon: Icons.delete,
                             backgroundColor: kWarningRed,
                             borderRadius: BorderRadius.circular(25.0),
@@ -109,10 +166,11 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       child: TaskCardWidget(
-                          taskCategory: tasks[index][0],
-                          taskTitle: tasks[index][1],
-                          isCompleted: isCompleted,
-                          index: index),
+                        taskCategory: tasks[index][0],
+                        taskTitle: tasks[index][1],
+                        isCompleted: isCompleted,
+                        index: index,
+                      ),
                     );
                   },
                 ),

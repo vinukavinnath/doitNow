@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:doitnow/core/constants.dart';
 
 class TaskCardWidget extends StatefulWidget {
-  const TaskCardWidget(
-      {super.key,
-      required this.taskCategory,
-      required this.taskTitle,
-      required this.isCompleted,
-      required this.index});
+  TaskCardWidget({
+    super.key,
+    required this.taskCategory,
+    required this.taskTitle,
+    required this.isCompleted,
+    required this.index,
+  });
 
   final String taskCategory;
   final String taskTitle;
-  final bool isCompleted;
+  bool isCompleted;
   final int index;
 
   @override
@@ -60,9 +61,18 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
               ),
             ],
           ),
-          Checkbox(
-            value: widget.isCompleted,
-            onChanged: (index) {},
+          Container(
+            decoration: BoxDecoration(
+              color: kJetBlack.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.done_outline,
+                color: kScaffoldColor,
+              ),
+            ),
           ),
         ],
       ),
