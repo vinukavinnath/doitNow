@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:doitnow/core/constants.dart';
 
 class TaskCardWidget extends StatefulWidget {
+
   TaskCardWidget({
     super.key,
     required this.taskCategory,
     required this.taskTitle,
-    required this.isCompleted,
+    // required this.isCompleted,
     required this.index,
   });
 
+
   final String taskCategory;
   final String taskTitle;
-  bool isCompleted;
+  // bool isCompleted;
   final int index;
 
   @override
@@ -58,6 +60,7 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
               Text(
                 widget.taskTitle,
                 style: kCardTitleTextStyle,
+                softWrap: true,
               ),
             ],
           ),
@@ -70,7 +73,7 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
               onPressed: () {},
               icon: Icon(
                 Icons.done_outline,
-                color: kScaffoldColor,
+                color: kScaffoldPrimaryColor,
               ),
             ),
           ),

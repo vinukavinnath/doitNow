@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 //Colors
-const kScaffoldColor = Color(0xFF101c2e);
+const kScaffoldPrimaryColor = Color(0xFF101c2e);
+const kScaffoldSecondaryColor=Color(0xFF182742);
 const kDarkOceanBlueColor = Color(0xFF5d8bff);
 const kDarkGreyColor = Color(0xFFcddfff);
 const kJetBlack = Color(0xFF000000);
@@ -10,6 +11,8 @@ const kWarningRed=Color(0xFFC70000);
 const kCard0Color = Color(0xFF9cecfe);
 const kCard1Color = Color(0xFFfff970);
 const kCard2Color = Color(0xFFffffff);
+
+const kDoneGreenColor=Color(0xFF007500);
 
 //TextStyles
 const kComplimentTextStyle = TextStyle(

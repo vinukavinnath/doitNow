@@ -18,9 +18,9 @@ class DoItNow extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        // brightness: Brightness.dark,
+        //primarySwatch: kScaffoldPrimaryColor,
         fontFamily: 'Sequel Sans',
-        scaffoldBackgroundColor: kScaffoldColor,
+        scaffoldBackgroundColor: kScaffoldPrimaryColor,
       ),
       home: const HomePage(),
     );
