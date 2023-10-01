@@ -1,4 +1,5 @@
 import 'package:doitnow/core/constants.dart';
+import 'package:doitnow/core/custom_snackbar_class.dart';
 import 'package:doitnow/widget/add_task_widget.dart';
 import 'package:doitnow/widget/task_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,10 @@ class _HomePageState extends State<HomePage> {
     Navigator.pop(context);
     categoryController.clear();
     taskController.clear();
+  }
+
+  void completeTask(int index) {
+    deleteTask(index);
   }
 
   @override
@@ -240,10 +245,10 @@ class _HomePageState extends State<HomePage> {
                                   onPressed: (context) {
                                     deleteTask(index);
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('Task was Deleted'),
-                                        backgroundColor: kWarningRed,
-                                        duration: Duration(seconds: 2),
+                                      CustomSnackBar(
+                                        backColor: kWarningRed,
+                                        title: 'Task was Removed',
+                                        time: 2,
                                       ),
                                     );
                                   },
@@ -257,6 +262,7 @@ class _HomePageState extends State<HomePage> {
                               taskCategory: tasks[index][0],
                               taskTitle: tasks[index][1],
                               index: index,
+                              completeTask: completeTask,
                             ),
                           );
                         },

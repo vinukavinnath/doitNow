@@ -1,3 +1,4 @@
+import 'package:doitnow/core/custom_snackbar_class.dart';
 import 'package:flutter/material.dart';
 import 'package:doitnow/core/constants.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +25,21 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
   final int characterLimit = 15;
 
   @override
+  void initState() {
+    widget.categoryController.addListener(updateCharacterCount);
+    super.initState();
+  }
+
+  void dispose() {
+    widget.categoryController.removeListener(updateCharacterCount);
+    super.dispose();
+  }
+
+  void updateCharacterCount() {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       elevation: 10.0,
@@ -46,6 +62,12 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
               inputFormatters: [
                 LengthLimitingTextInputFormatter(characterLimit),
               ],
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                '${widget.categoryController.text.length.toString()}/${characterLimit.toString()}',
+              ),
             ),
             const SizedBox(
               height: 20.0,
@@ -72,10 +94,10 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
             if (_taskFormKey.currentState!.validate()) {
               widget.submitData();
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Successfully Added'),
-                  backgroundColor: kDoneGreenColor,
-                  duration: Duration(seconds: 3),
+                CustomSnackBar(
+                  backColor: kDoneGreenColor,
+                  time: 3,
+                  title: 'Successfully Added!',
                 ),
               );
             }

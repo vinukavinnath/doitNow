@@ -13,6 +13,7 @@ const kCard1Color = Color(0xFFfff970);
 const kCard2Color = Color(0xFFffffff);
 
 const kDoneGreenColor=Color(0xFF007500);
+const kCompletedGoldColor=Color(0xFFD37506);
 
 //TextStyles
 const kComplimentTextStyle = TextStyle(

@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:doitnow/core/constants.dart';
+import 'package:doitnow/core/custom_snackbar_class.dart';
 
 class TaskCardWidget extends StatefulWidget {
-
   TaskCardWidget({
     super.key,
     required this.taskCategory,
     required this.taskTitle,
     // required this.isCompleted,
     required this.index,
+    required this.completeTask,
   });
-
 
   final String taskCategory;
   final String taskTitle;
   // bool isCompleted;
   final int index;
+  final void Function(int)? completeTask;
 
   @override
   State<TaskCardWidget> createState() => _TaskCardWidgetState();
@@ -50,19 +51,21 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                widget.taskCategory,
-                style: kCardCategoryTextStyle,
-              ),
-              Text(
-                widget.taskTitle,
-                style: kCardTitleTextStyle,
-                softWrap: true,
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  widget.taskCategory,
+                  style: kCardCategoryTextStyle,
+                ),
+                Text(
+                  widget.taskTitle,
+                  style: kCardTitleTextStyle,
+                  softWrap: true,
+                ),
+              ],
+            ),
           ),
           Container(
             decoration: BoxDecoration(
@@ -70,7 +73,16 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                widget.completeTask!(widget.index);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  CustomSnackBar(
+                    backColor: kCompletedGoldColor,
+                    title: 'Task Completed',
+                    time: 2,
+                  ),
+                );
+              },
               icon: Icon(
                 Icons.done_outline,
                 color: kScaffoldPrimaryColor,
