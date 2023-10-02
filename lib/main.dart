@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:doitnow/core/constants.dart';
 import 'package:doitnow/page/home_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Box box = await Hive.openBox('taskBox');
   runApp(
     const DoItNow(),
   );

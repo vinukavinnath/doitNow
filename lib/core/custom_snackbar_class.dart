@@ -15,8 +15,5 @@ class CustomSnackBar extends SnackBar {
           backgroundColor: backColor,
           behavior: SnackBarBehavior.fixed,
           duration: Duration(seconds: time),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
         );
 }

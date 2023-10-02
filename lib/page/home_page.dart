@@ -3,8 +3,10 @@ import 'package:doitnow/core/custom_snackbar_class.dart';
 import 'package:doitnow/widget/add_task_widget.dart';
 import 'package:doitnow/widget/task_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:doitnow/data/database.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,12 +16,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<List> tasks = [
-    ['Myself', 'Walk my Dog'],
-    ['Home', 'Grocery Shopping'],
-    //['Work', 'Business Meeting'],
-    //['Myself', 'Meet Doctor'],
-  ];
+  final _taskBox = Hive.box('taskBox');
+
+  Database db = Database();
 
   String compliment = '';
   String dayOfWeek = '';
@@ -45,37 +44,51 @@ class _HomePageState extends State<HomePage> {
 
   String getCompliment(int hour) {
     if (hour >= 5 && hour < 12) {
-      return 'Good Morning';
+      return 'Good \nMorning';
     } else if (hour >= 12 && hour < 17) {
-      return 'Good Afternoon';
+      return 'Good \nAfternoon';
     } else {
-      return 'Good Evening';
+      return 'Good \nEvening';
     }
   }
 
   void deleteTask(int index) {
     setState(() {
-      tasks.removeAt(index);
+      db.tasks.removeAt(index);
     });
+    db.updateTasks();
   }
 
   void addTask() {
     setState(() {
-      tasks.add([categoryController.text, taskController.text]);
+      db.tasks.add(
+        [categoryController.text, taskController.text],
+      );
     });
     Navigator.pop(context);
     categoryController.clear();
     taskController.clear();
+    db.updateTasks();
   }
 
   void completeTask(int index) {
     deleteTask(index);
+    db.updateTasks();
+  }
+
+  void clearTasks() {
+    db.tasks.clear();
   }
 
   @override
   void initState() {
-    super.initState();
     updateCompliment();
+    if (_taskBox.get("todolist") == null) {
+      db.initialState();
+    } else {
+      db.loadTasks();
+    }
+    super.initState();
   }
 
   @override
@@ -91,9 +104,25 @@ class _HomePageState extends State<HomePage> {
 
     return SafeArea(
       child: Scaffold(
+        // drawer: Column(
+        //   children: [
+        //     DrawerHeader(
+        //       child: Icon(
+        //         Icons.favorite,
+        //         color: Colors.white,
+        //       ),
+        //     ),
+        //     ListTile(
+        //       leading: Icon(Icons.delete),
+        //       title: Text(
+        //         'Delete All Tasks',
+        //       ),
+        //     ),
+        //   ],
+        // ),
         body: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
+            horizontal: 20.0,
           ),
           child: Column(
             children: <Widget>[
@@ -187,7 +216,7 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
                               child: Text(
-                                tasks.length.toString(),
+                                db.tasks.length.toString(),
                                 style: TextStyle(
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold,
@@ -199,7 +228,7 @@ class _HomePageState extends State<HomePage> {
                                 horizontal: 4.0,
                               ),
                               child: Text(
-                                tasks.length <= 1 ? 'Task' : 'Tasks',
+                                db.tasks.length <= 1 ? 'Task' : 'Tasks',
                                 style: kComplimentTextStyle.copyWith(
                                   fontSize: 25.0,
                                 ),
@@ -213,7 +242,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               Expanded(
-                child: tasks.length < 1
+                child: db.tasks.length < 1
                     ? Center(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -235,7 +264,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )
                     : ListView.builder(
-                        itemCount: tasks.length,
+                        itemCount: db.tasks.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Slidable(
                             endActionPane: ActionPane(
@@ -259,8 +288,8 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                             child: TaskCardWidget(
-                              taskCategory: tasks[index][0],
-                              taskTitle: tasks[index][1],
+                              taskCategory: db.tasks[index][0],
+                              taskTitle: db.tasks[index][1],
                               index: index,
                               completeTask: completeTask,
                             ),

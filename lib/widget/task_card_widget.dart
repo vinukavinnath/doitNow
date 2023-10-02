@@ -77,7 +77,7 @@ class _TaskCardWidgetState extends State<TaskCardWidget> {
                 widget.completeTask!(widget.index);
                 ScaffoldMessenger.of(context).showSnackBar(
                   CustomSnackBar(
-                    backColor: kCompletedGoldColor,
+                    backColor: kDoneGreenColor,
                     title: 'Task Completed',
                     time: 2,
                   ),

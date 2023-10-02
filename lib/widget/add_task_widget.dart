@@ -95,7 +95,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
               widget.submitData();
               ScaffoldMessenger.of(context).showSnackBar(
                 CustomSnackBar(
-                  backColor: kDoneGreenColor,
+                  backColor: kDarkOceanBlueColor,
                   time: 3,
                   title: 'Successfully Added!',
                 ),
