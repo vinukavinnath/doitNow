@@ -1,8 +1,6 @@
 # DoItNow
 
-<center>
-<img src="https://i.imgur.com/9d7tL79.png" alt="App Screenshot" width="300"/>
-</center>
+<div align="center"><img src="https://i.imgur.com/9d7tL79.png" alt="App Screenshot" width="300"/></div>
 
 ### Overview
 DoItNow is a simple and efficient to-do mobile application developed using Flutter. This app allows users to organize their tasks effectively by providing functionalities to add, mark as done, and delete tasks. With an intuitive UI and offline database support using Hive, it is lightweight and works seamlessly
@@ -24,7 +22,7 @@ Libraries:
 - [hive_flutter](https://pub.dev/packages/hive_flutter): Integration of Hive with Flutter for seamless database interaction.
 
 ### Screenshots
-<center>
+<div align="center">
 
 #### Adding a Task
 <img src="https://i.imgur.com/3bCdxGN.png" alt="App Screenshot" width="300"/>
@@ -36,7 +34,7 @@ Libraries:
 
 #### Remove a Task 
 <img src="https://i.imgur.com/UXc44lJ.png" alt="App Screenshot" width="300"/>
-</center>
+</div>
 
 ### How to Contribute
 Contributions are welcome to make DoItNow even better! To contribute:
